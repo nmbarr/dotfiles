@@ -9,6 +9,7 @@ BREW_PACKAGES=(
     bat
     git
     neovim
+    node
     pnpm
     stow
     tmux
