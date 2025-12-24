@@ -1,0 +1,14 @@
+# History files
+*_history
+.zsh_history
+.bash_history
+
+# Backup files
+*.backup
+*.bak
+
+# OS files
+.DS_Store
+
+# Local overrides
+*.local
