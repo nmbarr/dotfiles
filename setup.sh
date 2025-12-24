@@ -9,8 +9,8 @@ BREW_PACKAGES=(
     bat
     git
     neovim
-    node
-    pnpm
+    nodejs
+    npm
     stow
     tmux
     uv
@@ -32,7 +32,7 @@ YUM_DEPENDENCIES=(
     git
 )
 
-PNPM_PACKAGES=(
+NPM_PACKAGES=(
     tree-sitter-cli
 )
 
@@ -78,6 +78,7 @@ require() {
     return 1
 }
 
+# Install system dependencies
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if require apt; then
         sudo apt update
@@ -88,6 +89,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     fi
 fi
 
+# Install Homebrew if not present
 if ! require brew; then
     echo "Attempting to configure Homebrew from standard locations..."
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -102,6 +104,7 @@ if ! require brew; then
         fi
     fi
 
+    # If still not found, install Homebrew
     if ! require brew; then
         echo "Installing Homebrew..."
         export NONINTERACTIVE=1
@@ -124,9 +127,9 @@ fi
 echo "Installing Homebrew packages..."
 brew install "${BREW_PACKAGES[@]}"
 
-echo "Installing pnpm packages..."
-for package in "${PNPM_PACKAGES[@]}"; do
-    pnpm install -g "$package"
+echo "Installing npm packages..."
+for package in "${NPM_PACKAGES[@]}"; do
+    npm install -g "$package"
 done
 
 echo "Installing uv tools..."
