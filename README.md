@@ -1,22 +1,50 @@
-## Bricks's dotfiles
+# Brick's dotfiles
+This is a collection of configuration files for various software things
 
-This is a collection of configuration files for the tools that I like to use during software development
+# Dotfile management
+This project uses [GNU Stow](https://www.gnu.org/software/stow/) to create symlinks from this repository to your $HOME directory.
 
-## Dotfile management
+NOTE: GNU Stow is not supported on Windows.
 
-This project uses [GNU Stow](https://www.gnu.org/software/stow/) to create symlinks
-from this repository to your $HOME directory.
+# Initial Installation
 
-## Setup
-
-NOTE:
-
-- This script will ask for sudo permissions, which are then used for brew and apt (if applicable) installs
-- This script will create symlinks to ~/.zshrc, ~/.bashrc, etc,
-  see [GNU Stow](https://www.gnu.org/software/stow/manual/stow.html#Conflicts) for how conflicts will be handled
-
+1. Clone this repository:
 ```bash
-git clone https://github.com/nmbarr/dotfiles.git
-cd dotfiles
-./setup.sh
+git clone https://github.com/nmbarr/dotfiles.git ~/dotfiles (or clone via SSH)
+cd ~/dotfiles
+```
+
+2. Stow all of the configurations:
+```bash
+# Stow all dotfiles
+stow .
+```
+
+3. Reload your shell:
+```bash
+source ~/.bashrc  # or ~/.zshrc
+```
+
+# Updating you local dotfiles
+
+When dotfiles have been updated in the repository:
+
+1. Navigate to your dotfiles directory:
+```bash
+cd ~/dotfiles
+```
+
+2. Pull the latest changes:
+```bash
+git pull
+```
+
+3. Restow to update symlinks (if needed):
+```bash
+stow --restow .
+```
+
+4. Reload your shell configuration:
+```bash
+source ~/.bashrc  # or ~/.zshrc
 ```
