@@ -12,17 +12,17 @@ You need to have [GNU Stow](https://www.gnu.org/software/stow/) installed to man
 ### Ubuntu/Debian
 ```bash
 sudo apt update
-sudo apt install git stow
+sudo apt install stow
 ```
 
 ### Arch Linux
 ```bash
-sudo pacman -S git stow
+sudo pacman -S stow
 ```
 
 ### macOS
 ```bash
-brew install git stow
+brew install stow
 ```
 
 ## Initial Installation
