@@ -5,7 +5,7 @@
 
 # General aliases
 alias ls='ls --color'
-alias vim='nvim'
+# alias vim='nvim'
 alias c='clear'
 
 # git aliases
