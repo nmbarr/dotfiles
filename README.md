@@ -32,10 +32,15 @@ brew install stow
 git clone https://github.com/nmbarr/dotfiles.git ~/dotfiles
 ```
 
-2. Stow the dotfiles:
+2. Stow the configurations:
 ```bash
-cd ~
-stow dotfiles
+cd ~/dotfiles
+
+# Stow specific packages
+stow bash zsh shell
+
+# Or stow all directories at once
+stow */
 ```
 
 3. Reload your shell:
@@ -59,8 +64,11 @@ git pull
 
 3. Restow to update symlinks (if needed):
 ```bash
-cd ~
-stow --restow dotfiles
+# Restow specific packages
+stow --restow bash zsh shell
+
+# Or restow all directories at once
+stow --restow */
 ```
 
 4. Reload your shell configuration:
