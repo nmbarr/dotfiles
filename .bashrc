@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function dotf={ cd ~/dotfiles ; }
+dotf() { cd ~/dotfiles; }
 
 # git aliases
 alias gs='git status'
