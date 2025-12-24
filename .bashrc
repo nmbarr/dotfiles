@@ -1,5 +1,7 @@
 #!/bin/bash
 
+function dotf={ cd~/dotfiles; }
+
 # git aliases
 alias gs='git status'
 alias ga='git add'
