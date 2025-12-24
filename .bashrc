@@ -26,27 +26,7 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 # --- Navigation functions ---
 dotf() { cd ~/dotfiles; }
 
-# git aliases
-alias gs='git status'
-alias ga='git add'
-alias gcm='git commit -m'
-alias gp='git push'
-alias gl='git pull'
-
-# --- Directory navigation ---
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-
-# --- eza aliases (if installed) ---
-if command -v eza &> /dev/null; then
-    alias ls='eza -al --color=always --group-directories-first'
-    alias la='eza -a --color=always --group-directories-first'
-    alias ll='eza -l --color=always --group-directories-first'
-    alias lt='eza -aT --color=always --group-directories-first'
-    alias l.='eza -al --color=always --group-directories-first ../'
-    alias l..='eza -al --color=always --group-directories-first ../../'
-    alias l...='eza -al --color=always --group-directories-first ../../../'
+# Source shared aliases
+if [ -f ~/.shell_aliases ]; then
+    . ~/.shell_aliases
 fi
