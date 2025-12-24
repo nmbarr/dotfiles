@@ -4,20 +4,38 @@ This is a collection of configuration files for various software things
 # Dotfile management
 This project uses [GNU Stow](https://www.gnu.org/software/stow/) to create symlinks from this repository to your $HOME directory.
 
-NOTE: GNU Stow is not supported on Windows.
+**NOTE:** GNU Stow is not supported on Windows.
 
-# Initial Installation
+## Install Stow
+You need to have [GNU Stow](https://www.gnu.org/software/stow/) installed to manage the dotfiles. Below are instructions for installing Stow on various operating systems.
+
+### Ubuntu/Debian
+```bash
+sudo apt update
+sudo apt install git stow
+```
+
+### Arch Linux
+```bash
+sudo pacman -S git stow
+```
+
+### macOS
+```bash
+brew install git stow
+```
+
+## Initial Installation
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/nmbarr/dotfiles.git ~/dotfiles (or clone via SSH)
-cd ~/dotfiles
+git clone https://github.com/nmbarr/dotfiles.git ~/dotfiles
 ```
 
-2. Stow all of the configurations:
+2. Stow the dotfiles:
 ```bash
-# Stow all dotfiles
-stow .
+cd ~
+stow dotfiles
 ```
 
 3. Reload your shell:
@@ -25,7 +43,7 @@ stow .
 source ~/.bashrc  # or ~/.zshrc
 ```
 
-# Updating you local dotfiles
+## Updating Dotfiles
 
 When dotfiles have been updated in the repository:
 
@@ -41,7 +59,8 @@ git pull
 
 3. Restow to update symlinks (if needed):
 ```bash
-stow --restow .
+cd ~
+stow --restow dotfiles
 ```
 
 4. Reload your shell configuration:
