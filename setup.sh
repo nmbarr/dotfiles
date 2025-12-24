@@ -5,9 +5,50 @@
 # https://github.com/WizardStark/dotfiles/blob/main/setup.sh
 # #################################################################################################
 
+BREW_PACKAGES=(
+    bat
+    git
+    neovim
+    pnpm
+    stow
+    tmux
+    uv
+    zsh
+)
+
+APT_DEPENDENCIES=(
+    build-essential
+    procps
+    curl
+    file
+    git
+)
+
+YUM_DEPENDENCIES=(
+    procps-ng
+    curl
+    file
+    git
+)
+
+PNPM_PACKAGES=(
+    tree-sitter-cli
+)
+
+UV_TOOLS=(
+    neovim-remote
+)
+
+declare -A GIT_REPOS=(
+    ["~/.zsh-catpuccin"]="https://github.com/catppuccin/zsh-syntax-highlighting.git"
+    ["~/.fzf"]="https://github.com/junegunn/fzf.git"
+    ["~/.config/tmux/plugins/tpm"]="https://github.com/tmux-plugins/tpm"
+)
+
+# Exit immediately if a command exits with a non-zero status
 set -e
 
-# Protect against running on Windows (outside WSL)
+# Prevent running on Windows (except WSL)
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
     echo "ERROR: This script is designed for Linux and macOS only." >&2
     echo "You appear to be running on Windows (Git Bash/Cygwin/MinGW)." >&2
@@ -20,7 +61,7 @@ if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; t
     exit 1
 fi
 
-# Verify we're on a supported OS
+# Check for supported OS
 if [[ "$OSTYPE" != "linux-gnu"* && "$OSTYPE" != "darwin"* ]]; then
     echo "ERROR: Unsupported operating system: $OSTYPE" >&2
     echo "This script supports Linux and macOS only." >&2
@@ -29,6 +70,7 @@ fi
 
 sudo echo "Shell elevated with su permissions"
 
+# Check for valid application PATH
 require() {
     command -v "${1}" &>/dev/null && return 0
     printf 'Missing required application: %s\n' "${1}" >&2
@@ -36,14 +78,12 @@ require() {
 }
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # install linuxbrew dependencies
-    # these need to be installed with apt to allow installation of brew
     if require apt; then
         sudo apt update
-        sudo apt-get install -y build-essential procps curl file git
+        sudo apt-get install -y "${APT_DEPENDENCIES[@]}"
     elif require yum; then
         sudo yum groupinstall 'Development Tools'
-        sudo yum install procps-ng curl file git
+        sudo yum install "${YUM_DEPENDENCIES[@]}"
     fi
 fi
 
@@ -80,45 +120,62 @@ if ! require brew; then
     fi
 fi
 
-# Core essentials
-brew install git neovim pnpm stow tmux uv zsh
+echo "Installing Homebrew packages..."
+brew install "${BREW_PACKAGES[@]}"
 
-# Optional enhancements (comment out if you want minimal)
-# brew install bat eza ripgrep fd git-delta jq zoxide
+echo "Installing pnpm packages..."
+for package in "${PNPM_PACKAGES[@]}"; do
+    pnpm install -g "$package"
+done
 
-pnpm install -g tree-sitter-cli
-uv tool install neovim-remote
+echo "Installing uv tools..."
+for tool in "${UV_TOOLS[@]}"; do
+    uv tool install "$tool"
+done
 
 mkdir -p ~/.config
 
-(
-    git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh-catpuccin
-)
+echo "Cloning Git repositories..."
+for dest in "${!GIT_REPOS[@]}"; do
+    repo="${GIT_REPOS[$dest]}"
+    dest_expanded="${dest/#\~/$HOME}"
+    
+    (
+        if [[ "$dest" == *"fzf"* ]]; then
+            git clone --depth 1 "$repo" "$dest_expanded"
+        else
+            git clone "$repo" "$dest_expanded"
+        fi
+    )
+done
 
 (
+    echo "Installing bat theme..."
     mkdir -p "$(bat --config-dir)/themes"
     wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme
     bat cache --build
 )
 
-(
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --key-bindings --completion --update-rc
-)
+echo "Configuring fzf..."
+~/.fzf/install --key-bindings --completion --update-rc
 
-(
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-)
-
-echo "Moving existing ~/.zshrc to ~/.zshrc_old"
-mv ~/.zshrc ~/.zshrc_old
+echo "Deploying dotfiles..."
+if [ -f ~/.zshrc ]; then
+    echo "Moving existing ~/.zshrc to ~/.zshrc_old"
+    mv ~/.zshrc ~/.zshrc_old
+fi
 stow -v --adopt -t $HOME home
 
+echo "Installing tmux plugins..."
 ~/.config/tmux/plugins/tpm/bin/install_plugins
 
+echo "Installing Neovim plugins..."
 nvim --headless "+Lazy! sync" +qa
 
+echo "Setting zsh as default shell..."
 command -v zsh | sudo tee -a /etc/shells
 sudo chsh -s $(which zsh) $(whoami)
+
+echo "Launching zsh..."
 zsh -l
 echo "Done!"
