@@ -1,0 +1,13 @@
+# aesthetics
+background-opacity = 0.85
+background-blur=16
+macos-titlebar-style = hidden
+
+# theme
+theme = TokyoNight Storm
+
+# typography
+font-size=13
+font-thicken=true
+font-thicken-strength=1
+adjust-cell-height=1
