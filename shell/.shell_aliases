@@ -3,9 +3,8 @@
 # These aliases are sourced in both .bashrc and .zshrc
 # ####################################################
 
-# General aliases
-alias ls='ls --color'
-# alias vim='nvim'
+# General
+alias vim='nvim'
 alias c='clear'
 
 # git aliases
@@ -22,13 +21,6 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-# eza aliases (if installed)
-if command -v eza &> /dev/null; then
-    alias ls='eza -al --color=always --group-directories-first'
-    alias la='eza -a --color=always --group-directories-first'
-    alias ll='eza -l --color=always --group-directories-first'
-    alias lt='eza -aT --color=always --group-directories-first'
-    alias l.='eza -al --color=always --group-directories-first ../'
-    alias l..='eza -al --color=always --group-directories-first ../../'
-    alias l...='eza -al --color=always --group-directories-first ../../../'
-fi
+# ls aliases
+alias ls='ls -lah --color=auto'   # default: no hidden files
+alias lc='ls -CF --color=auto'    # compact columnar view
