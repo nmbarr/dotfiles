@@ -26,11 +26,3 @@ Neovim 0.11 config using [Lazy.nvim](https://github.com/folke/lazy.nvim) for plu
 ### Shell
 Shell-agnostic aliases in `.shell_aliases`, sourced by both bash and zsh configs. Includes shortcuts for common git commands and directory navigation.
  
-## Dependencies
- 
-- [GNU Stow](https://www.gnu.org/software/stow/) — `sudo apt install stow`
-- [Neovim 0.11+](https://github.com/neovim/neovim) — installed via ARM64 tarball
-- [Oh My Posh](https://ohmyposh.dev/) — `curl -s https://ohmyposh.dev/install.sh | bash -s`
-- [Ghostty](https://ghostty.org/) — terminal emulator
-- [wl-clipboard](https://github.com/bugaevc/wl-clipboard) — Wayland clipboard support for Neovim (`sudo apt install wl-clipboard`)
-- A [Nerd Font](https://www.nerdfonts.com/) — Ghostty has several built in
