@@ -37,7 +37,9 @@ if ! shopt -oq posix; then
 fi
 
 # PATH
-export PATH="$HOME/.local/bin:/usr/local/go/bin:/opt/nvim-linux-$(uname -m)/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="/opt/nvim-linux-$(uname -m)/bin:$PATH"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
