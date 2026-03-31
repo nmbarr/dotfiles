@@ -47,9 +47,9 @@ if ! shopt -oq posix; then
 fi
 
 # PATH
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:/usr/local/go/bin"
-export PATH="$PATH:/opt/nvim-linux-arm64/bin"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="/opt/nvim-linux-$(uname -m)/bin:$PATH"
 
 # Prompt
 eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/catppuccin.omp.json)"
