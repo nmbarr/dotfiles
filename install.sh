@@ -19,7 +19,9 @@ sudo apt update && sudo apt install -y \
     gcc \
     make \
     python3 \
-    unzip
+    unzip \
+    ripgrep \
+    fd-find
 
 # Go
 GO_VERSION="1.24.1"
@@ -31,4 +33,4 @@ rm go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # oh-my-posh
-curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin -a ${OMP_ARCH}
+curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
