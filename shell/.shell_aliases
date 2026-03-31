@@ -21,6 +21,11 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-# ls aliases
-alias ls='ls -lah --color=auto'   # default: no hidden files
-alias lc='ls -CF --color=auto'    # compact columnar view
+# ls aliases - use eza if available, otherwise fallback to ls
+if command -v eza &> /dev/null; then
+    alias ls='eza -lah'           # long format with all files using eza
+    alias lc='eza -CF'            # compact columnar view using eza
+else
+    alias ls='ls -lah --color=auto'   # default: no hidden files
+    alias lc='ls -CF --color=auto'    # compact columnar view
+fi

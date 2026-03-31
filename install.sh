@@ -21,7 +21,8 @@ sudo apt update && sudo apt install -y \
     python3 \
     unzip \
     ripgrep \
-    fd-find
+    fd-find \
+    eza
 
 # Clipboard provider
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
