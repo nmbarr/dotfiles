@@ -1,6 +1,6 @@
 # dotfiles
  
-My dotfiles I ike to use.
+My dotfiles I like to use.
 
 ## Setup
  
@@ -20,9 +20,9 @@ stow -t $HOME */
 
 ## install.sh
 
-Installs the following on a fresh Linux system (x86_64 and ARM64 supported):
+Installs the following on a fresh Linux system (x86_64 or ARM64):
 
-- System packages: `stow`, `gcc`, `make`, `python3`, `unzip`, `ripgrep`, `fd-find`
+- System packages: `stow`, `gcc`, `make`, `python3`, `unzip`, `ripgrep`, `fd-find`, `eza`
 - [Go](https://go.dev/)
 - [uv](https://github.com/astral-sh/uv) (Python package manager)
 - [oh-my-posh](https://ohmyposh.dev/)
