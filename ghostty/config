@@ -1,13 +1,17 @@
+# cursor
+cursor-style = block
+shell-integration-features = no-cursor
+
 # aesthetics
-background-opacity = 0.85
-background-blur=16
-macos-titlebar-style = hidden
+background-opacity = 0.95
+background-blur=true
 
 # theme
 theme = TokyoNight Storm
 
 # typography
-font-size=13
+font-size=12
+font-family = JetBrainsMono Nerd Font
 font-thicken=true
 font-thicken-strength=1
 adjust-cell-height=1

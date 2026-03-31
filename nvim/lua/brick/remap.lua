@@ -1,6 +1,14 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { silent = true })
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { silent = true })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { silent = true })
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { silent = true })
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { silent = true })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { silent = true })
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -14,12 +22,6 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "=ap", "ma=ap'a")
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 
-vim.keymap.set("n", "<leader>vwm", function()
-    require("vim-with-me").StartVimWithMe()
-end)
-vim.keymap.set("n", "<leader>svwm", function()
-    require("vim-with-me").StopVimWithMe()
-end)
 vim.keymap.set("n", "<leader>lt", function()
     vim.cmd [[ PlenaryBustedFile % ]]
 end)
