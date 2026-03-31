@@ -33,3 +33,4 @@ fi
 # Editor aliases
 alias brc='${EDITOR:-nvim} ~/.bashrc && source ~/.bashrc'
 alias ali='${EDITOR:-nvim} ~/.shell_aliases && source ~/.shell_aliases'
+alias ufn='${EDITOR:-nvim} ~/.user_functions && source ~/.user_functions'
