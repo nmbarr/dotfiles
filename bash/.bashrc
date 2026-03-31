@@ -42,6 +42,7 @@ fi
 # PATH
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin"
 export PATH="/opt/nvim-linux-$(uname -m)/bin:$PATH"
 
 # NVM
