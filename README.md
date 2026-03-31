@@ -15,7 +15,7 @@ stow -t $HOME bash ghostty nvim shell
 ## Configs
  
 ### Bash
-Standard `.bashrc` with history settings, color aliases, and bash completion.
+Standard `.bashrc` with history settings, color aliases, and bash completion. Also includes OhMyPosh shell configuration.
  
 ### Ghostty
 Config for the [Ghostty](https://ghostty.org/) terminal emulator. Includes font, theme, opacity, and Sway/Wayland-specific settings.
