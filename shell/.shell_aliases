@@ -29,3 +29,7 @@ else
     alias ls='ls -lah --color=auto'   # default: no hidden files
     alias lc='ls -CF --color=auto'    # compact columnar view
 fi
+
+# Editor aliases
+alias brc='${EDITOR:-nvim} ~/.bashrc && source ~/.bashrc'
+alias ali='${EDITOR:-nvim} ~/.shell_aliases && source ~/.shell_aliases'
