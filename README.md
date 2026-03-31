@@ -9,13 +9,6 @@ Clone the repo and run Stow from the dotfiles directory:
 ```bash
 git clone https://github.com/nmbarr/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow -t $HOME bash ghostty nvim shell
-```
-## Fresh Install
-```bash
-# Clone the repo
-git clone https://github.com/nmbarr/dotfiles.git ~/dotfiles
-cd ~/dotfiles
 
 # Run the install script
 chmod +x install.sh
