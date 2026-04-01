@@ -42,6 +42,15 @@ curl -OL https://go.dev/dl/go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
 sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
 rm go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
 
+# Neovim
+NVIM_VERSION="0.11.0"
+NVIM_ARCH=$(uname -m)
+curl -LO https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-${NVIM_ARCH}.tar.gz
+tar -xzf nvim-linux-${NVIM_ARCH}.tar.gz
+sudo rm -rf /opt/nvim-linux-${NVIM_ARCH}
+sudo mv nvim-linux-${NVIM_ARCH} /opt/nvim-linux-${NVIM_ARCH}
+rm nvim-linux-${NVIM_ARCH}.tar.gz
+
 # uv (installer handles arch automatically)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
