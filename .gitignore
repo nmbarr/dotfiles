@@ -12,3 +12,6 @@
 
 # Local overrides
 *.local
+
+# Custom files
+.user_functions
