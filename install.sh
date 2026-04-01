@@ -22,7 +22,8 @@ sudo apt update && sudo apt install -y \
     unzip \
     ripgrep \
     fd-find \
-    eza
+    eza \
+    tree
 
 # Clipboard provider
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
