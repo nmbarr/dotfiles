@@ -50,10 +50,6 @@ vim.keymap.set("n", "<leader>ea", "oassert.NoError(err, \"\")<Esc>F\";a")       
 vim.keymap.set("n", "<leader>ef", "oif err != nil {<CR>}<Esc>Olog.Fatalf(\"error: %s\\n\", err.Error())<Esc>jj")  -- log.Fatalf
 vim.keymap.set("n", "<leader>el", "oif err != nil {<CR>}<Esc>O.logger.Error(\"error\", \"error\", err)<Esc>F.;i") -- logger.Error
 
-vim.keymap.set("n", "<leader>ca", function()
-    require("cellular-automaton").start_animation("make_it_rain") -- cellular automaton rain
-end)
-
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so") -- source current file
 end)
