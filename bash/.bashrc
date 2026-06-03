@@ -52,3 +52,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # Prompt
 eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/catppuccin.omp.json)"
+export PATH="$HOME/bin:$PATH"
+. "$HOME/.cargo/env"
