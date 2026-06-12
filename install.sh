@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Detect architecture
 ARCH=$(uname -m)
@@ -12,6 +13,10 @@ else
     echo "Unsupported architecture: $ARCH"
     exit 1
 fi
+
+# Map uname -m to Neovim release filename arch
+NVIM_ARCH=$(uname -m)
+[ "$NVIM_ARCH" = "aarch64" ] && NVIM_ARCH="arm64"
 
 # System packages
 sudo apt update && sudo apt install -y \
@@ -45,7 +50,6 @@ rm go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
 
 # Neovim
 NVIM_VERSION="0.11.0"
-NVIM_ARCH=$(uname -m)
 curl -LO https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-${NVIM_ARCH}.tar.gz
 tar -xzf nvim-linux-${NVIM_ARCH}.tar.gz
 sudo rm -rf /opt/nvim-linux-${NVIM_ARCH}
@@ -57,3 +61,14 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # oh-my-posh
 curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
+
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+. "$HOME/.cargo/env"
+
+# Stow dotfiles
+echo "Stowing dotfiles..."
+cd ~/dotfiles
+stow .
+
+echo "Done! Open a new shell or run: source ~/.bashrc"

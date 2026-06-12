@@ -43,7 +43,7 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
-export PATH="/opt/nvim-linux-$(uname -m)/bin:$PATH"
+export PATH="/opt/nvim-linux-arm64/bin:$PATH"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
@@ -53,4 +53,4 @@ export NVM_DIR="$HOME/.nvm"
 # Prompt
 eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/catppuccin.omp.json)"
 export PATH="$HOME/bin:$PATH"
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
