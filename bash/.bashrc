@@ -43,7 +43,11 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
-export PATH="/opt/nvim-linux-arm64/bin:$PATH"
+
+# Neovim - detect architecture
+NVIM_ARCH=$(uname -m)
+[ "$NVIM_ARCH" = "aarch64" ] && NVIM_ARCH="arm64"
+export PATH="/opt/nvim-linux-${NVIM_ARCH}/bin:$PATH"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
