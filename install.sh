@@ -28,7 +28,8 @@ sudo apt update && sudo apt install -y \
     ripgrep \
     fd-find \
     eza \
-    tree
+    tree \
+    hexyl
 
 # Clipboard provider
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
