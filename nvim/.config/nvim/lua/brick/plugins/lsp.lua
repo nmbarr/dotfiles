@@ -17,7 +17,13 @@ return {
     config = function()
         require("conform").setup({
             formatters_by_ft = {
-            }
+                c = { "clang-format" },
+                cpp = { "clang-format" },
+            },
+            format_on_save = {
+                timeout_ms = 500,
+                lsp_fallback = true,
+            },
         })
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
@@ -37,6 +43,7 @@ return {
                 "vtsls",
                 "tailwindcss",
                 "pyright",
+                "clangd",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
