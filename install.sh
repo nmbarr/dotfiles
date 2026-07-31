@@ -29,7 +29,9 @@ sudo apt update && sudo apt install -y \
     fd-find \
     eza \
     tree \
-    hexyl
+    hexyl \
+    ninja-build \
+    gcc-arm-none-eabi
 
 # Clipboard provider
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
