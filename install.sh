@@ -1,6 +1,23 @@
 #!/bin/bash
 set -e
 
+# Detect platform: wsl, windows (Git Bash/MSYS/Cygwin), or linux
+if [ -n "$WSL_DISTRO_NAME" ] || grep -qi microsoft /proc/version 2>/dev/null; then
+    PLATFORM="wsl"
+elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
+    PLATFORM="windows"
+else
+    PLATFORM="linux"
+fi
+
+if [ "$PLATFORM" = "windows" ]; then
+    echo "Native Windows detected, only stowing windows_terminal config..."
+    cd ~/dotfiles
+    stow windows_terminal
+    echo "Done!"
+    exit 0
+fi
+
 # Detect architecture
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
@@ -72,6 +89,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 # Stow dotfiles
 echo "Stowing dotfiles..."
 cd ~/dotfiles
-stow .
+if [ "$PLATFORM" = "wsl" ]; then
+    stow bash zsh shell nvim ohmyposh templates
+else
+    stow bash zsh shell nvim ghostty ohmyposh templates
+fi
 
 echo "Done! Open a new shell or run: source ~/.bashrc"
