@@ -47,6 +47,7 @@ sudo apt update && sudo apt install -y \
     eza \
     tree \
     hexyl \
+    cmake \
     ninja-build \
     gcc-arm-none-eabi
 
