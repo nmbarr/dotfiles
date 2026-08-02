@@ -1,7 +1,28 @@
 #!/bin/bash
 set -e
 
+# Downloads a .tar.gz, extracts it, and moves the extracted directory into
+# place at $dest (replacing whatever was there before).
+download_and_extract() {
+    local url="$1"
+    local dest="$2"
+    local archive
+    archive=$(basename "$url")
+    local extracted
+    extracted=$(basename "$dest")
+
+    echo "Downloading $archive..."
+    curl -LO "$url"
+    tar -xzf "$archive"
+    rm "$archive"
+
+    echo "Installing to $dest..."
+    sudo rm -rf "$dest"
+    sudo mv "$extracted" "$dest"
+}
+
 # Detect platform: wsl, windows (Git Bash/MSYS/Cygwin), or linux
+echo "Detecting platform..."
 if [ -n "$WSL_DISTRO_NAME" ] || grep -qi microsoft /proc/version 2>/dev/null; then
     PLATFORM="wsl"
 elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
@@ -9,6 +30,7 @@ elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
 else
     PLATFORM="linux"
 fi
+echo "Platform: $PLATFORM"
 
 if [ "$PLATFORM" = "windows" ]; then
     echo "Native Windows detected, only stowing windows_terminal config..."
@@ -19,6 +41,7 @@ if [ "$PLATFORM" = "windows" ]; then
 fi
 
 # Detect architecture
+echo "Detecting architecture..."
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
     GO_ARCH="amd64"
@@ -30,70 +53,45 @@ else
     echo "Unsupported architecture: $ARCH"
     exit 1
 fi
+echo "Architecture: $ARCH"
 
 # Map uname -m to Neovim release filename arch
 NVIM_ARCH=$(uname -m)
 [ "$NVIM_ARCH" = "aarch64" ] && NVIM_ARCH="arm64"
 
-# System packages
-sudo apt update && sudo apt install -y \
-    stow \
-    gcc \
-    make \
-    python3 \
-    unzip \
-    ripgrep \
-    fd-find \
-    eza \
-    tree \
-    hexyl \
-    cmake \
-    ninja-build \
-    gcc-arm-none-eabi
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Clipboard provider
-if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-    echo "Wayland detected, installing wl-clipboard..."
-    sudo apt install -y wl-clipboard
-elif [ "$XDG_SESSION_TYPE" = "x11" ]; then
-    echo "X11 detected, installing xclip..."
-    sudo apt install -y xclip
-else
-    echo "Could not detect display server, installing both..."
-    sudo apt install -y wl-clipboard xclip
-fi
+echo "Installing system packages..."
+"$SCRIPT_DIR/scripts/packages.sh"
 
-# Go
+echo "Installing Go..."
 GO_VERSION="1.24.1"
-curl -OL https://go.dev/dl/go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
-sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
-rm go${GO_VERSION}.linux-${GO_ARCH}.tar.gz
+download_and_extract "https://go.dev/dl/go${GO_VERSION}.linux-${GO_ARCH}.tar.gz" "/usr/local/go"
 
-# Neovim
+echo "Installing Neovim..."
 NVIM_VERSION="0.11.0"
-curl -LO https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-${NVIM_ARCH}.tar.gz
-tar -xzf nvim-linux-${NVIM_ARCH}.tar.gz
-sudo rm -rf /opt/nvim-linux-${NVIM_ARCH}
-sudo mv nvim-linux-${NVIM_ARCH} /opt/nvim-linux-${NVIM_ARCH}
-rm nvim-linux-${NVIM_ARCH}.tar.gz
+download_and_extract "https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-${NVIM_ARCH}.tar.gz" "/opt/nvim-linux-${NVIM_ARCH}"
 
-# uv (installer handles arch automatically)
+echo "Installing uv..."
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# oh-my-posh
+echo "Installing oh-my-posh..."
 curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
 
-# Rust
+echo "Installing Rust..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 . "$HOME/.cargo/env"
 
 # Stow dotfiles
 echo "Stowing dotfiles..."
 cd ~/dotfiles
-if [ "$PLATFORM" = "wsl" ]; then
-    stow bash zsh shell nvim ohmyposh templates
+PACKAGES="bash shell nvim ohmyposh"
+[ "$PLATFORM" != "wsl" ] && PACKAGES="$PACKAGES ghostty"
+if [ -f "$HOME/.user_functions" ]; then
+    echo "Existing ~/.user_functions found, skipping templates package"
 else
-    stow bash zsh shell nvim ghostty ohmyposh templates
+    PACKAGES="$PACKAGES templates"
 fi
+stow $PACKAGES
 
 echo "Done! Open a new shell or run: source ~/.bashrc"
