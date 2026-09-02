@@ -9,6 +9,7 @@ alias vim='nvim'
 # git aliases
 alias gs='git status'
 alias ga='git add'
+alias gco='git checkout'
 alias gcm='git commit -m'
 alias gp='git push'
 alias gl='git pull'
@@ -33,3 +34,8 @@ fi
 alias brc='${EDITOR:-nvim} ~/.bashrc && source ~/.bashrc'
 alias ali='${EDITOR:-nvim} ~/.shell_aliases && source ~/.shell_aliases'
 alias ufn='${EDITOR:-nvim} ~/.user_functions && source ~/.user_functions'
+
+# -----------------------------------
+# WINDOWS ALIASES
+# -----------------------------------
+alias oe='explorer.exe .'
